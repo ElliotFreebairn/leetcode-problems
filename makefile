@@ -1,8 +1,9 @@
 
-SRCS := $(wildcard *.cpp)
+SRCS := $(wildcard src/*.cpp)
+SRCS_BASE = $(basename $(SRCS))
 BIN = $(patsubst %.cpp,%,$(SRCS))
 
 all: $(BIN)
 
 clean:
-	rm -f %(BIN)
+	rm -f $(SRCS_BASE)
