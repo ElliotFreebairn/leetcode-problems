@@ -4,11 +4,49 @@ public class medium_38_sudoku {
 
     public static void main(String[] args)
     {
-        System.out.println("hello");
+        System.out.println("one pass");
+    }
+
+    public boolean isValidSudokd_onepass(char[][] board) {
+
+        Set<Character>[] rows = new HashSet[9];
+        Set<Character>[] cols = new HashSet[9];
+        Set<Character>[] boxes = new HashSet[9];
+
+        for (int i = 0; i < 9; i++)
+        {
+            rows[i] = new HashSet<>();
+            cols[i] = new HashSet<>();
+            boxes[i] = new HashSet<>();
+        }
+
+        for (int r = 0; r < board.length; r++)
+        {
+            for (int c = 0; c < board[0].length; c++)
+            {
+                char num = board[r][c];
+                if (num == '.') continue;
+
+                // row 1 col 7 each box contains 9 valuesc
+                int box_index = (r / 3) * 3 + (c / 3);
+
+                if (rows[r].contains(num) ||
+                    cols[c].contains(num) ||
+                    boxes[box_index].contains(num))
+                {
+                    return false;
+                }
+
+                rows[r].add(num);
+                cols[c].add(num);
+                boxes[box_index].add(num);
+            }
+        }
+        return true;
     }
 
     // slow run (can do in one pass)
-     public boolean isValidSudoku(char[][] board) {
+    public boolean isValidSudoku_multiplepass(char[][] board) {
         // row pass
         for (int r = 0; r < board.length; r++)
         {
